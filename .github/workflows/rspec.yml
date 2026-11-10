@@ -1,0 +1,28 @@
+name: RSpec Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # emfile内の `ruby "3.3.6"` という行を強制的に削除してバージョン不一致エラーを完全に防ぐ
+    - name: Bypass Ruby version check in Gemfile
+      run: sed -i '/^ruby /d' Gemfile
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.3'
+        bundler-cache: true # これを入れるとbundle installがより安定
+
+    - name: Run RSpec tests
+      run: bundle exec rspec

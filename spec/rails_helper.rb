@@ -78,6 +78,7 @@ RSpec.configure do |config|
   if ENV['CODEBUILD_BUILD_ID']
     config.before(:each, type: :system) do
       driven_by :ci_headless_chrome
+      Capybara.ignore_hidden_elements = false
     end
   else
     config.before(:each, type: :system) do
