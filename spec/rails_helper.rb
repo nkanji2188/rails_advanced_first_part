@@ -73,11 +73,12 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   # spec/support/ 配下のモジュールを読み込む
-  # config.include LoginMacros
+  config.include LoginMacros
 
   if ENV['CODEBUILD_BUILD_ID']
     config.before(:each, type: :system) do
       driven_by :ci_headless_chrome
+      Capybara.ignore_hidden_elements = false
     end
   else
     config.before(:each, type: :system) do

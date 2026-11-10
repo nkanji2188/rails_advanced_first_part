@@ -1,9 +1,9 @@
 module LoginMacros
-  def login(user, password = 'password')
+  def login(user)
     visit admin_login_identifier_path
-    fill_in 'user_name', with: user.name
-    click_on '次へ'
-    fill_in 'user_password', with: password
-    click_on 'ログイン'
+    fill_in 'user[name]', with: user.name
+    click_button('次へ')
+    fill_in 'user[password]', with: 'password'
+    click_button('ログイン')
   end
 end
