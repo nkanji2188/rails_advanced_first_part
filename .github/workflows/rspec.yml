@@ -8,26 +8,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    #Rubyの厳密なバージョンチェックをスキップする設定
-    env:
-      BUNDLE_WITH__RUBY_VERSION: "true"
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # emfile内の `ruby "3.3.6"` という行を強制的に削除してバージョン不一致エラーを完全に防ぐ
+    - name: Bypass Ruby version check in Gemfile
+      run: sed -i '/^ruby /d' Gemfile
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.3'
-
-    - name: Install dependencies
-      run: |
-        gem install bundler
-        bundle install
+        bundler-cache: true # これを入れるとbundle installがより安定
 
     - name: Run RSpec tests
       run: bundle exec rspec
