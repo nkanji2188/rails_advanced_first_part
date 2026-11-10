@@ -73,7 +73,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   # spec/support/ 配下のモジュールを読み込む
-  config.include LoginMacros
+  # config.include LoginMacros
 
   if ENV['CODEBUILD_BUILD_ID']
     config.before(:each, type: :system) do
