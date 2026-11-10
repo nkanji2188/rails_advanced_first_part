@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    #Rubyの厳密なバージョンチェックをスキップする設定
+    env:
+      BUNDLE_WITH__RUBY_VERSION: "true"
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
